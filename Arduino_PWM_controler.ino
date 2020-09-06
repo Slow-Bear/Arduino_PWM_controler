@@ -52,6 +52,11 @@ while (digitalRead(Butt) == HIGH){
     buff=aA0.getValue();
   }
 }
+
+while (digitalRead(Butt) == LOW){
+  //wait for the buton to be released
+}
+
 //int32_t frequency = 20000; //frequency (in Hz)
 
 int32_t frequency = ( aA0.getValue()*50); //frequency (in Hz)
@@ -73,7 +78,7 @@ lcd.print("Duty check");
   lcd.print("DUTY:       ");
   lcd.print(25*aA0.getValue()/255);
   lcd.print("%");
-while ( (25*aA0.getValue()/255)  > 10 )
+while ( digitalRead(Butt) == HIGH )
 {
   aA0.update();
  if ( buff != aA0.getValue() ){
@@ -84,16 +89,10 @@ while ( (25*aA0.getValue()/255)  > 10 )
   buff=aA0.getValue();
  }
 };
-/*
-lcd.clear();
-lcd.setCursor(0,0);
-lcd.print("Temp check");
-lcd.setCursor(0,1);
-lcd.print("Temp: ");
-TEMP.update();
-lcd.print(TEMP.getValue());
-lcd.print("*C");*/
-delay (3000);
+while (digitalRead(Butt) == LOW){
+  //wait for the buton to be released
+}
+
 
 lcd.clear();
 lcd.setCursor(0,0);
@@ -118,7 +117,6 @@ lcd.clear();
 void loop() {
   // put your main code here, to run repeatedly:
   aA0.update();
-  TEMP.update();
  pwmWrite(FRQ_PIN, (aA0.getValue()/4));
 
  if ( buff != aA0.getValue() ){
@@ -129,11 +127,5 @@ void loop() {
   buff=aA0.getValue();
  }
 
- /*if ( buff_tmp !=  TEMP.getValue() ){
-  lcd.setCursor(0,0);
-  lcd.print("TEMP:     ");
-  lcd.print(TEMP.getValue());
-  lcd.print("*C");
-  buff_tmp=TEMP.getValue();
- }*/
+
 }
